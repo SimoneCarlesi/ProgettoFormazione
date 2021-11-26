@@ -12,17 +12,19 @@ public interface ServiceInterface {
 	
 	public List<ProcessDTO> getAllProcess();
 	
-//	public List<ProcessDTO> getProcessByDate(String date) throws ParseException;
+	public List<ProcessDTO> getProcessByDate(String date) throws ParseException;
 	
 	public List<EsecutionDTO> getAllEsecutions();
 
-	public String externalServiceCall() throws Exception;
+	public String somministrationClient() throws Exception;
 	
-	public String externalServiceCallFromAbbrevation() throws Exception;
+	public List<SiglaDTO> provinceClient() throws Exception;
 
 	public List<SomministrationDTO> fromJsonToJava() throws Exception;
 	
 	public List<SomministrationDTO> selectSomministration(); 
+	
+	public List<SiglaDTO> checkProvince() throws Exception;
 	
 	//public List<SomministrationDTO> findBySigla(String sigla);
 }

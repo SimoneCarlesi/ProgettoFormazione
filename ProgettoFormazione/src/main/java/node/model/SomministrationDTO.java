@@ -1,5 +1,9 @@
 package node.model;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 public class SomministrationDTO {
 	
 	private int codistat_comune_dom;
@@ -8,14 +12,14 @@ public class SomministrationDTO {
 	private int tot_dose1;
 	private int tot_dose2;
 	private String sigla;
-	private String data;
+	private ZonedDateTime data;
 	
 	public SomministrationDTO() {
 		
 	}
 	
 	public SomministrationDTO(int codistat_comune_dom, String comune_dom, String provincia_dom, int tot_dose1,
-			int tot_dose2, String sigla, String data) {
+			int tot_dose2, String sigla, ZonedDateTime data) {
 		super();
 		this.codistat_comune_dom = codistat_comune_dom;
 		this.comune_dom = comune_dom;
@@ -62,10 +66,10 @@ public class SomministrationDTO {
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
-	public String getData() {
+	public ZonedDateTime getData() {
 		return data;
 	}
-	public void setData(String data) {
+	public void setData(ZonedDateTime data) {
 		this.data = data;
 	}
 	

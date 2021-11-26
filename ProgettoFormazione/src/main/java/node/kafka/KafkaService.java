@@ -24,11 +24,11 @@ public class KafkaService{
 	
 	public void sendMessage(String topic, List<SomministrationDTO> somministrations) {
         
-		for(SomministrationDTO somm: somministrations) {
-			kafkaTemplate.send(topicName,somm);
-		}
+//		for(SomministrationDTO somm: somministrations) {
+//			kafkaTemplate.send(topicName,somm);
+//		}
 		
-		//somministrations.forEach(e -> kafkaTemplate.send(topicName,e));	
+		somministrations.forEach(e -> kafkaTemplate.send(topicName,e));	
 		
 //	    ListenableFuture<SendResult<String, List<SomministrationDTO>>> future = 
 //	      kafkaTemplate.send(topicName, somministrations);

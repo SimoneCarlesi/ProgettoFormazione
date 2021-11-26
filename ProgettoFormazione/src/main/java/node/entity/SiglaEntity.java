@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="somministration")
+@Table(name="checkprovince")
 public class SiglaEntity {
 	
 	@Id
@@ -16,8 +16,8 @@ public class SiglaEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int codice;
 	
-	@Column(name="nome")
-	private String nome;
+	@Column(name="provincia")
+	private String provincia;
 	
 	@Column(name="sigla")
 	private String sigla;
@@ -33,12 +33,12 @@ public class SiglaEntity {
 		this.codice = codice;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getProvincia() {
+		return provincia;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNome(String provincia) {
+		this.provincia = provincia;
 	}
 
 	public String getSigla() {

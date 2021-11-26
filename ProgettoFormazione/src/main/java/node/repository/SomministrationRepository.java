@@ -12,6 +12,5 @@ import node.entity.SomministrationEntity;
 public interface SomministrationRepository extends JpaRepository<SomministrationEntity,Long> { 
 	
 	
-	public List<SomministrationEntity> findBySigla(String sigla);
 	
 }

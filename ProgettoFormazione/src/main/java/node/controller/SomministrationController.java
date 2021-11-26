@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import node.kafka.KafkaService;
 import node.model.EsecutionDTO;
 import node.model.ProcessDTO;
+import node.model.SiglaDTO;
 //import node.kafka.KafkaService;
 import node.model.SomministrationDTO;
 import node.service.ServiceInterface;
@@ -26,7 +29,8 @@ import node.service.ServiceInterface;
 @RequestMapping("/Vaccini")
 public class SomministrationController {
 
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(SomministrationController.class);
+	
 	@Value("${spring.application.name}")
 	private String appName;
 	
@@ -39,16 +43,15 @@ public class SomministrationController {
 	@Autowired
 	private KafkaService kafkaService;
 	
-	
-	@PostMapping(value="/postSomm", consumes= {"application/json"},produces= {"application/json"})
-	public String postJsonMessage(@RequestBody SomministrationDTO somm) throws Exception {
+	@PostMapping(value="/postSomm")
+	@ResponseBody
+	public ResponseEntity<List<SomministrationDTO>> postJsonMessage() throws Exception {
 		List<SomministrationDTO> listSommDto=sommService.fromJsonToJava();
 		kafkaService.sendMessage(topicName,listSommDto);
-		return "Message published successfully";
+		return ResponseEntity.ok().body(listSommDto);
 	}
 	
 	
-
 	// JEE STYLE CON EJB
 	// creare il metodo per ottenere TUTTI i gatti
 	//@GET
@@ -79,12 +82,12 @@ public class SomministrationController {
 		}
 	}
 	
-//	@GetMapping("/getProcessByDate")
-//	@ResponseBody
-//	public ResponseEntity<List<ProcessDTO>> getProcessByDate(@RequestParam String date) throws ParseException  {
-//		List<ProcessDTO> resultRequest = sommService.getProcessByDate(date);
-//		return ResponseEntity.ok().body(resultRequest);
-//	}
+	@GetMapping("/getProcessByDate")
+	@ResponseBody
+	public ResponseEntity<List<ProcessDTO>> getProcessByDate(@RequestParam String date) throws ParseException  {
+		List<ProcessDTO> resultRequest = sommService.getProcessByDate(date);
+		return ResponseEntity.ok().body(resultRequest);
+	}
 	
 	@GetMapping("/getListEsecutions")
 	public ResponseEntity<List<EsecutionDTO>> getAllEsecutions() {
@@ -107,13 +110,13 @@ public class SomministrationController {
 	
 	
 	// fai una get di un servizio esterno
-	@GetMapping("/externalServiceCall")
+	@GetMapping("/somministrationClient")
 	public ResponseEntity<String> externalServiceCall() {
 		//???
 		// eseguire una get di un servizio esterno, scaricare i dati e salvarli nel mio DB
 
 		try {
-			String resultRequest = sommService.externalServiceCall();
+			String resultRequest = sommService.somministrationClient();
 			return ResponseEntity.ok().body(resultRequest);
 		} catch (Exception exc) {
 			return ResponseEntity.internalServerError().body(exc.getMessage());
@@ -121,14 +124,15 @@ public class SomministrationController {
 	}
 	
 	// fai una get di un servizio esterno di un altro json per la sigla
-		@GetMapping("/externalServiceCallFromAbbrevation")
-		public ResponseEntity<String> externalServiceCallFromAbbrevation() {
+	//@ TODO controllare exceptionHandler
+		@GetMapping("/provinceClient")
+		public ResponseEntity externalServiceCallFromAbbrevation() {
 			//???
 			// eseguire una get di un servizio esterno, scaricare i dati e salvarli nel mio DB
 			try {
-				String resultRequest = sommService.externalServiceCallFromAbbrevation();
+				List<SiglaDTO> resultRequest = sommService.provinceClient();
 				return ResponseEntity.ok().body(resultRequest);
-			} catch (Exception exc) {
+			} catch (Exception exc) {//@ TODO generic response
 				return ResponseEntity.internalServerError().body(exc.getMessage());
 			}
 		}

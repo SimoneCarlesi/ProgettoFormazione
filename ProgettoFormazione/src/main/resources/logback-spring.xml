@@ -1,4 +1,7 @@
 <configuration>
+	<springProperty scope="context" name="log.level" source="log.level" />
+	<springProperty scope="context" name="LOG_HOME" source="log.home" />
+	<springProperty scope="context" name="LOG_FILE" source="log.file" />
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -10,7 +13,7 @@
 
 	<appender name="SAVE-TO-FILE"
 		class="ch.qos.logback.core.FileAppender">
-		<file>${LOG_PATH}/AnagraficaService.log</file>
+		<file>${LOG_HOME}/${LOG_FILE}.log</file>
 		<encoder
 			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
