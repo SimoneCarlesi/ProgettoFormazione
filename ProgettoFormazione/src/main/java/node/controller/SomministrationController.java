@@ -3,12 +3,18 @@ package node.controller;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.StreamSupport;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.common.header.Headers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import node.entity.ExecutionEntity;
+import node.entity.ProcessEntity;
 import node.kafka.KafkaService;
-import node.model.EsecutionDTO;
-import node.model.ProcessDTO;
-import node.model.SiglaDTO;
+import node.model.ExecutionDto;
+import node.model.ProcessDto;
+import node.model.AbbreviationsDto;
 //import node.kafka.KafkaService;
-import node.model.SomministrationDTO;
+import node.model.SomministrationsDto;
 import node.service.ServiceInterface;
 
 @RestController
@@ -30,6 +38,8 @@ import node.service.ServiceInterface;
 public class SomministrationController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SomministrationController.class);
+	
+	private static final Logger logger =LoggerFactory.getLogger(SomministrationController.class);
 	
 	@Value("${spring.application.name}")
 	private String appName;
@@ -43,115 +53,85 @@ public class SomministrationController {
 	@Autowired
 	private KafkaService kafkaService;
 	
-	@PostMapping(value="/postSomm")
-	@ResponseBody
-	public ResponseEntity<List<SomministrationDTO>> postJsonMessage() throws Exception {
-		List<SomministrationDTO> listSommDto=sommService.fromJsonToJava();
-		kafkaService.sendMessage(topicName,listSommDto);
-		return ResponseEntity.ok().body(listSommDto);
-	}
+	@KafkaListener(topics = "${topicName}", clientIdPrefix = "json", containerFactory = "kafkaListenerContainerFactory")
+    public void listenAsObject(ConsumerRecord<String, SomministrationsDto> cr,
+                               @Payload SomministrationsDto payload) {
+        logger.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
+                typeIdHeader(cr.headers()), payload, cr.toString());
+    }
+	
+	private static String typeIdHeader(Headers headers) {
+        return StreamSupport.stream(headers.spliterator(), false)
+                .filter(header -> header.key().equals("__TypeId__"))
+                .findFirst().map(header -> new String(header.value())).orElse("N/A");
+    }
 	
 	
-	// JEE STYLE CON EJB
-	// creare il metodo per ottenere TUTTI i gatti
-	//@GET
-	//@Produces(MediaType.APPLICATION_JSON) //formato di dato
-	//@Path("allGatti") //variabile {}
-
-	// SPRING
-	/**
-	 * Get list of roles
-	 * @return list of Ruoli existing on DB
-	 */
-	@GetMapping("/getListProcess")
-	public ResponseEntity<List<ProcessDTO>> getAllProcess() {
-		//log.info("getListRuoli - START");
-		List<ProcessDTO> response =  sommService.getAllProcess();
-		//log.info("getListRuoli - response of count : {}", response.size());
-
-
-		/*return Optional
-				.ofNullable(response)
-				.map( list -> ResponseEntity.ok().body(list))  
-				.orElseGet( () -> ResponseEntity.notFound().build() );
-		 */
-		if(!response.isEmpty()) {
-			return ResponseEntity.ok().body(response);
-		} else {
-			return ResponseEntity.notFound().build(); 
-		}
-	}
 	
-	@GetMapping("/getProcessByDate")
-	@ResponseBody
-	public ResponseEntity<List<ProcessDTO>> getProcessByDate(@RequestParam String date) throws ParseException  {
-		List<ProcessDTO> resultRequest = sommService.getProcessByDate(date);
-		return ResponseEntity.ok().body(resultRequest);
-	}
-	
-	@GetMapping("/getListEsecutions")
-	public ResponseEntity<List<EsecutionDTO>> getAllEsecutions() {
-		//log.info("getListRuoli - START");
-		List<EsecutionDTO> response =  sommService.getAllEsecutions();
-		//log.info("getListRuoli - response of count : {}", response.size());
-
-
-		/*return Optional
-				.ofNullable(response)
-				.map( list -> ResponseEntity.ok().body(list))  
-				.orElseGet( () -> ResponseEntity.notFound().build() );
-		 */
-		if(!response.isEmpty()) {
-			return ResponseEntity.ok().body(response);
-		} else {
-			return ResponseEntity.notFound().build(); 
-		}
-	}
-	
-	
-	// fai una get di un servizio esterno
-	@GetMapping("/somministrationClient")
-	public ResponseEntity<String> externalServiceCall() {
-		//???
-		// eseguire una get di un servizio esterno, scaricare i dati e salvarli nel mio DB
-
+	@GetMapping("/dataClient")
+	public ResponseEntity<String> dataClient() {
 		try {
-			String resultRequest = sommService.somministrationClient();
-			return ResponseEntity.ok().body(resultRequest);
-		} catch (Exception exc) {
-			return ResponseEntity.internalServerError().body(exc.getMessage());
-		}
-	}
-	
-	// fai una get di un servizio esterno di un altro json per la sigla
-	//@ TODO controllare exceptionHandler
-		@GetMapping("/provinceClient")
-		public ResponseEntity externalServiceCallFromAbbrevation() {
-			//???
-			// eseguire una get di un servizio esterno, scaricare i dati e salvarli nel mio DB
-			try {
-				List<SiglaDTO> resultRequest = sommService.provinceClient();
-				return ResponseEntity.ok().body(resultRequest);
-			} catch (Exception exc) {//@ TODO generic response
-				return ResponseEntity.internalServerError().body(exc.getMessage());
-			}
-		}
-
-	// fai una get di un servizio esterno E trasformalo in java
-	@GetMapping("/fromJsonToJava")
-	public ResponseEntity<String> fromJsonToJava() {
-		Date data= new Date();
-		//???
-		// eseguire una get di un servizio esterno, scaricare i dati e salvarli nel mio DB
-		try {
-			long startTime = System.currentTimeMillis();
-			List<SomministrationDTO> resultRequest = sommService.fromJsonToJava();
-			long stopTime = System.currentTimeMillis();
-			long elapsedTime = stopTime - startTime;
-			System.out.println("Status ending");
-			return ResponseEntity.ok().body("Status success. " + "Data e ora del processo: " + data +  "; Tempo del processo:" + elapsedTime);
+			String resultRequest = sommService.dataClient();
+			return ResponseEntity.ok().body("The process ended succesfully");
 		} catch (Exception exc) {
 			return ResponseEntity.ok().body("Status failure.");
+		}
+	}
+
+	@GetMapping("/provinceExtractor")
+	public ResponseEntity<List<AbbreviationsDto>> provinceClient() throws Exception {
+		try {
+			List<AbbreviationsDto> resultRequest = sommService.provinceClient();
+			return ResponseEntity.ok().body(resultRequest);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			return null;
+
+		}
+	}
+
+	@GetMapping("/fromJsonToJava")
+	public ResponseEntity<String> fromJsonToJava() {
+		try {
+			List<SomministrationsDto> resultRequest = sommService.runProcess();
+			return ResponseEntity.ok().body("The process ended succesfully");
+		} catch (Exception exc) {
+			return ResponseEntity.ok().body("Status failure.");
+		}
+	}
+
+	@PostMapping(value = "/postSomm")
+	@ResponseBody
+	public List<SomministrationsDto> postJsonMessage() throws Exception {
+		List<SomministrationsDto> listSommDto = sommService.runProcess();
+		kafkaService.sendMessage(topicName, listSommDto);
+		return listSommDto;
+	}
+
+	@GetMapping("/getListEsecutions")
+	public ResponseEntity<List<ExecutionDto>> getAllEsecutions() {
+		List<ExecutionDto> response = sommService.getAllEsecutions();
+		if (!response.isEmpty()) {
+			return ResponseEntity.ok().body(response);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/getProcessByDate")
+	@ResponseBody
+	public ResponseEntity<List<ProcessDto>> getProcessByDate(@RequestParam String date) throws ParseException {
+		List<ProcessDto> resultRequest = sommService.getProcessByDate(date);
+		return ResponseEntity.ok().body(resultRequest);
+	}
+
+	@GetMapping("/getListProcess")
+	public ResponseEntity<List<ProcessDto>> getAllProcess() {
+		List<ProcessDto> response = sommService.getAllProcess();
+		if (!response.isEmpty()) {
+			return ResponseEntity.ok().body(response);
+		} else {
+			return ResponseEntity.notFound().build();
 		}
 	}
 	

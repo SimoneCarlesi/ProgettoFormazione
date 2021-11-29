@@ -2,6 +2,8 @@ package node.kafka;
 
 import java.util.List;
 
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import node.model.SomministrationDTO;
+import node.model.SomministrationsDto;
 
 @Service
 public class KafkaService{
@@ -20,9 +22,9 @@ public class KafkaService{
 	private String topicName;
 	
 	@Autowired
-	private KafkaTemplate<String, SomministrationDTO> kafkaTemplate;
+	private KafkaTemplate<String, SomministrationsDto> kafkaTemplate;
 	
-	public void sendMessage(String topic, List<SomministrationDTO> somministrations) {
+	public void sendMessage(String topic, List<SomministrationsDto> somministrations) {
         
 //		for(SomministrationDTO somm: somministrations) {
 //			kafkaTemplate.send(topicName,somm);
@@ -47,4 +49,5 @@ public class KafkaService{
 //	        }
 //	    });
 	}
+	
 }

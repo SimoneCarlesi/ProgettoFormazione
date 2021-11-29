@@ -10,6 +10,6 @@ import node.entity.ProcessEntity;
 @Repository
 public interface ProcessRepository extends JpaRepository<ProcessEntity,Long> { 
 	
-	public List<ProcessEntity> findByDataOra(Date date);
+	public List<ProcessEntity> findByDateTime(Date date);
 
 }

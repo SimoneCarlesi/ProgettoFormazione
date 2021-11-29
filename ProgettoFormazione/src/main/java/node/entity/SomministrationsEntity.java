@@ -11,11 +11,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="")
-public class SomministrationEntity {
+public class SomministrationsEntity {
 	
 	@Id
 	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name="data")

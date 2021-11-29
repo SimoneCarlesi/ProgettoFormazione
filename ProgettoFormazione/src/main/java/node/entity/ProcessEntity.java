@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="processo")
@@ -15,11 +17,11 @@ public class ProcessEntity {
 	
 	@Id
 	@Column(name="uuid_processo")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int uuid;
 	
 	@Column(name="data_ora")
-	private Date dataOra;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateTime;
 	
 	@Column(name="status")
 	private String status;
@@ -32,12 +34,12 @@ public class ProcessEntity {
 		this.uuid = uuid;
 	}
 
-	public Date getDataOra() {
-		return dataOra;
+	public Date getDateTime() {
+		return dateTime;
 	}
 
-	public void setDataOra(Date dataOra) {
-		this.dataOra = dataOra;
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	public String getStatus() {

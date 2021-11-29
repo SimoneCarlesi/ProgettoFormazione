@@ -9,18 +9,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="esecuzione")
-public class EsecutionEntity {
+public class ExecutionEntity {
 	
 	@Id
-	@Column(name="id_processo")
+	@Column(name="id_esecuzione")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name="tempo")
-	private int tempo;
+	private long time;
 	
 	@Column(name="esito")
-	private String esito;
+	private String result;
 
 	public int getId() {
 		return id;
@@ -30,20 +30,20 @@ public class EsecutionEntity {
 		this.id = id;
 	}
 
-	public int getTempo() {
-		return tempo;
+	public long getTime() {
+		return time;
 	}
 
-	public void setTempo(int tempo) {
-		this.tempo = tempo;
+	public void setTime(long time) {
+		this.time = time;
 	}
 
-	public String getEsito() {
-		return esito;
+	public String getResult() {
+		return result;
 	}
 
-	public void setEsito(String esito) {
-		this.esito = esito;
+	public void setResult(String result) {
+		this.result = result;
 	}
 	
 	

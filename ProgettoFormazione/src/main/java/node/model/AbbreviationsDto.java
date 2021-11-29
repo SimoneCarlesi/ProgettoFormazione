@@ -1,6 +1,6 @@
 package node.model;
 
-public class SiglaDTO {
+public class AbbreviationsDto {
 	
 	private int codice;
 	private String sigla;
@@ -19,7 +19,7 @@ public class SiglaDTO {
 		return nome;
 	}
 
-	public void setProvincia(String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
@@ -38,9 +38,5 @@ public class SiglaDTO {
 	public void setRegione(String regione) {
 		this.regione = regione;
 	}
-	
-	
-	
-	
 
 }

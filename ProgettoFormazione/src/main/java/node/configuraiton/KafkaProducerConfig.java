@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import node.model.SomministrationDTO;
+import node.model.SomministrationsDto;
 
 @Configuration
 public class KafkaProducerConfig {
@@ -28,7 +29,7 @@ public class KafkaProducerConfig {
     private String bootstrapAddress;
 
     @Bean
-    public ProducerFactory<String, SomministrationDTO> producerFactory() {
+    public ProducerFactory<String, SomministrationsDto> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
@@ -43,7 +44,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, SomministrationDTO> kafkaTemplate() {
-        return new KafkaTemplate<String,SomministrationDTO>(producerFactory());
+    public KafkaTemplate<String, SomministrationsDto> kafkaTemplate() {
+        return new KafkaTemplate<String,SomministrationsDto>(producerFactory());
     }
 }

@@ -3,10 +3,10 @@ package node.model;
 import java.util.Date;
 
 
-public class ProcessDTO {
+public class ProcessDto {
 	
 	private int uuid;
-	private Date dataOra;
+	private Date dateTime;
 	private String status;
 	
 	public int getUuid() {
@@ -15,11 +15,11 @@ public class ProcessDTO {
 	public void setUuid(int uuid) {
 		this.uuid = uuid;
 	}
-	public Date getDataOra() {
-		return dataOra;
+	public Date getDateTime() {
+		return dateTime;
 	}
-	public void setDataOra(Date dataOra) {
-		this.dataOra = dataOra;
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
 	}
 	public String getStatus() {
 		return status;

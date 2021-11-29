@@ -2,11 +2,12 @@ package node.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import node.entity.EsecutionEntity;
+
+import node.entity.SomministrationsEntity;
 
 @Repository
-public interface EsecutionRepository extends JpaRepository<EsecutionEntity,Long> { 
+public interface SomministrationsRepository extends JpaRepository<SomministrationsEntity,Long> { 
 	
 	
-
+	
 }

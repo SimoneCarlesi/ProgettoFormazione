@@ -1,10 +1,8 @@
 package node.model;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
-public class SomministrationDTO {
+public class SomministrationsDto {
 	
 	private int codistat_comune_dom;
 	private String comune_dom;
@@ -14,11 +12,11 @@ public class SomministrationDTO {
 	private String sigla;
 	private ZonedDateTime data;
 	
-	public SomministrationDTO() {
+	public SomministrationsDto() {
 		
 	}
 	
-	public SomministrationDTO(int codistat_comune_dom, String comune_dom, String provincia_dom, int tot_dose1,
+	public SomministrationsDto(int codistat_comune_dom, String comune_dom, String provincia_dom, int tot_dose1,
 			int tot_dose2, String sigla, ZonedDateTime data) {
 		super();
 		this.codistat_comune_dom = codistat_comune_dom;
