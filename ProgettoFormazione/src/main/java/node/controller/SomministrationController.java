@@ -52,21 +52,7 @@ public class SomministrationController {
 	
 	@Autowired
 	private KafkaService kafkaService;
-	
-	@KafkaListener(topics = "${topicName}", clientIdPrefix = "json", containerFactory = "kafkaListenerContainerFactory")
-    public void listenAsObject(ConsumerRecord<String, SomministrationsDto> cr,
-                               @Payload SomministrationsDto payload) {
-        logger.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
-                typeIdHeader(cr.headers()), payload, cr.toString());
-    }
-	
-	private static String typeIdHeader(Headers headers) {
-        return StreamSupport.stream(headers.spliterator(), false)
-                .filter(header -> header.key().equals("__TypeId__"))
-                .findFirst().map(header -> new String(header.value())).orElse("N/A");
-    }
-	
-	
+
 	
 	@GetMapping("/dataClient")
 	public ResponseEntity<String> dataClient() {

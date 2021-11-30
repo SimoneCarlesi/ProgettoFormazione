@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class ExecutionEntity {
 	
 	@Id
-	@Column(name="id_esecuzione")
+	@Column(name="id_esecuzione",nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	

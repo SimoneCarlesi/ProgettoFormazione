@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 public class ProcessEntity {
 	
 	@Id
-	@Column(name="uuid_processo")
+	@Column(name="uuid_processo",nullable=false)
 	private int uuid;
 	
 	@Column(name="data_ora")

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class AbbreviationsEntity {
 	
 	@Id
-	@Column(name="codice")
+	@Column(name="codice",nullable=false)
 	private int codice;
 	
 	@Column(name="provincia")

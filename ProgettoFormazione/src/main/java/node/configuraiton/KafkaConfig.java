@@ -13,7 +13,7 @@ import org.springframework.kafka.core.KafkaAdmin;
 @Configuration
 public class KafkaConfig {
     
-    @Value(value = "${kafka.bootstrapAddress}")
+    @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
     
     @Value("${topicName}")

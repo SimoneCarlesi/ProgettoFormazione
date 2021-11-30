@@ -61,7 +61,6 @@ public class PFManager {
 				if (sommDto.getProvincia_dom().equalsIgnoreCase(s.getNome())) {
 					sommDto.setSigla(jsonString);
 				} else {
-					LOGGER.error("Sigla not found");
 				}
 			}
 			sommDto.setData(zonedDateTimeNow);
@@ -117,7 +116,6 @@ public class PFManager {
 	
 	public ProcessEntity getProcessEntity(ProcessDto procDto) {
 		ProcessEntity procEntity = new ProcessEntity();
-		procEntity.setUuid(procDto.getUuid());
 		procEntity.setDateTime(procDto.getDateTime());
 		procEntity.setStatus(procDto.getStatus());
 		return procEntity;
@@ -125,9 +123,7 @@ public class PFManager {
 	
 	
 	public ExecutionEntity getExecutionEntity(ExecutionDto exeDto) {
-		Random i = new Random();
 		ExecutionEntity exeEntity = new ExecutionEntity();
-		exeEntity.setId(i.nextInt());
 		exeEntity.setTime(exeDto.getTime());
 		exeEntity.setResult(exeDto.getResult());
 		return exeEntity;
