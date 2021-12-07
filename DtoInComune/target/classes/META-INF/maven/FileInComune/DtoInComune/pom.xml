@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>FileInComune</groupId>
+  <artifactId>DtoInComune</artifactId>
+  <version>0.0.1</version>
+  <name>DtoInComune</name>
+
+	<properties>
+		<java.version>1.8</java.version>
+    	<resteasy.version>3.0.14.Final</resteasy.version>
+	</properties>
+
+	<dependencies>
+
+		<!--SWAGGER-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		
+		<!--  RESTESAY - avvia chiamate rest dal vostro applicativo -->
+		 <dependency>
+	        <groupId>org.jboss.resteasy</groupId>
+	        <artifactId>resteasy-servlet-initializer</artifactId>
+	        <version>${resteasy.version}</version>
+    	</dependency>
+	    
+	    <dependency>
+	        <groupId>org.jboss.resteasy</groupId>
+	        <artifactId>resteasy-client</artifactId>
+	        <version>${resteasy.version}</version>
+	    </dependency>
+	    
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.18.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.18.Final</version>
+		</dependency>
+		
+    	<dependency>
+        	<groupId>org.mongodb</groupId>
+        	<artifactId>mongo-java-driver</artifactId>
+        	<version>2.12.3</version>
+    	</dependency>
+
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
