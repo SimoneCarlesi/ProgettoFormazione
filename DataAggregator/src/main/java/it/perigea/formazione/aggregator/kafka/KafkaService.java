@@ -1,5 +1,7 @@
 package it.perigea.formazione.aggregator.kafka;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -62,25 +64,23 @@ public class KafkaService {
 		KafkaConsumer<String, SomministrationsDto> kafkaConsumer = null;
 		int i = 0;
 		int recordCount = 0;
-		List<SomministrationsDto> messagesfromKafka = new ArrayList<>();
 		Properties props = new Properties();
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
 		props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-
+		List<SomministrationsDto> messagesfromKafka = new ArrayList<>();
 		kafkaConsumer = new KafkaConsumer<>(props);
 		kafkaConsumer.subscribe(Arrays.asList(topicName));
 		TopicPartition topicPartition = new TopicPartition(topicName, 0);
 		List<TopicPartition> list = new ArrayList<>();
 		list.add(topicPartition);
 		LOGGER.info("Subscribed to topic " + kafkaConsumer.listTopics());
-		// @ TODO definire qua la data d'inizio (x)
-		Date start = new Date();
+		Date start = new Date(); 
 		try {
 			while (true) {
-				ConsumerRecords<String, SomministrationsDto> records = kafkaConsumer.poll(1000);
+				ConsumerRecords<String, SomministrationsDto> records = kafkaConsumer.poll(10000000);
 				recordCount = records.count();
 				LOGGER.info("recordCount " + recordCount);
 				for (ConsumerRecord<String, SomministrationsDto> record : records) {
@@ -88,17 +88,14 @@ public class KafkaService {
 					dto = record.value();
 					messagesfromKafka.add(dto);
 				}
-				// @ TODO definire una data "now" (y)
 				Date now = new Date();
-				// @ TODO se y-x > tot minuti, allora carico a prescindere dal numero di
-				// messaggi (almeno 1)
-				// @ TODO dopo il primo salvataggio, x=y o x=now e y continua a cambiare
-				if (messagesfromKafka.size() >= 500 || now.getTime() - start.getTime() > 900000 ) {
-					// @ TODO funzione per caricare a database e valutarlo con
+				if (messagesfromKafka.size() >= 500 || now.getTime() - start.getTime() > 90000000 ) {
+					// @ TODO va inserito nell'appllication quando parte, farlo controllandolo via rest
 					List<SomministrationsEntity> listEntity=mongo.fromListDtoToListEntity(messagesfromKafka);
 					mongo.insertListEntityToMongoDB(listEntity);
 					start = now;
 				}
+				messagesfromKafka.clear();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -2,79 +2,111 @@ package it.perigea.formazione.comune;
 
 import java.time.ZonedDateTime;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.NoArgsConstructor;
 
 public class SomministrationsDto {
 	
-	private int codistat_comune_dom;
-	private String comune_dom;
-	private String provincia_dom;
-	private int tot_dose1;
-	private int tot_dose2;
+	private ObjectId id;
+	private int codistatComuneDom;
+	private String comuneDom;
+	private String provinciaDom;
+	private int totDose1;
+	private int totDose2;
 	private String sigla;
 	private ZonedDateTime data;
+	private String date;
 	
 	public SomministrationsDto() {
 		
 	}
 	
-	public SomministrationsDto(int codistat_comune_dom, String comune_dom, String provincia_dom, int tot_dose1,
-			int tot_dose2, String sigla, ZonedDateTime data) {
+	
+
+	public SomministrationsDto(int codistatComuneDom, String comuneDom, String provinciaDom, int totDose1, int totDose2,
+			String sigla, ZonedDateTime data) {
 		super();
-		this.codistat_comune_dom = codistat_comune_dom;
-		this.comune_dom = comune_dom;
-		this.provincia_dom = provincia_dom;
-		this.tot_dose1 = tot_dose1;
-		this.tot_dose2 = tot_dose2;
+		this.codistatComuneDom = codistatComuneDom;
+		this.comuneDom = comuneDom;
+		this.provinciaDom = provinciaDom;
+		this.totDose1 = totDose1;
+		this.totDose2 = totDose2;
 		this.sigla = sigla;
 		this.data = data;
 	}
-	
-//	public SomministrationsDto(SomministrationsDto value) {
-//		value=value;
-//	}
 
-	public int getCodistat_comune_dom() {
-		return codistat_comune_dom;
+
+	
+	
+	public String getDate() {
+		return date;
 	}
-	public void setCodistat_comune_dom(int codistat_comune_dom) {
-		this.codistat_comune_dom = codistat_comune_dom;
+
+
+
+	public void setDate(String date) {
+		this.date = date;
 	}
-	public String getComune_dom() {
-		return comune_dom;
+
+
+
+	public int getCodistatComuneDom() {
+		return codistatComuneDom;
 	}
-	public void setComune_dom(String comune_dom) {
-		this.comune_dom = comune_dom;
+
+	public void setCodistatComuneDom(int codistatComuneDom) {
+		this.codistatComuneDom = codistatComuneDom;
 	}
-	public String getProvincia_dom() {
-		return provincia_dom;
+
+	public String getComuneDom() {
+		return comuneDom;
 	}
-	public void setProvincia_dom(String provincia_dom) {
-		this.provincia_dom = provincia_dom;
+
+	public void setComuneDom(String comuneDom) {
+		this.comuneDom = comuneDom;
 	}
-	public int getTot_dose1() {
-		return tot_dose1;
+
+	public String getProvinciaDom() {
+		return provinciaDom;
 	}
-	public void setTot_dose1(int tot_dose1) {
-		this.tot_dose1 = tot_dose1;
+
+	public void setProvinciaDom(String provinciaDom) {
+		this.provinciaDom = provinciaDom;
 	}
-	public int getTot_dose2() {
-		return tot_dose2;
+
+	public int getTotDose1() {
+		return totDose1;
 	}
-	public void setTot_dose2(int tot_dose2) {
-		this.tot_dose2 = tot_dose2;
+
+	public void setTotDose1(int totDose1) {
+		this.totDose1 = totDose1;
 	}
+
+	public int getTotDose2() {
+		return totDose2;
+	}
+
+	public void setTotDose2(int totDose2) {
+		this.totDose2 = totDose2;
+	}
+
 	public String getSigla() {
 		return sigla;
 	}
+
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
+
 	public ZonedDateTime getData() {
 		return data;
 	}
+
 	public void setData(ZonedDateTime data) {
 		this.data = data;
 	}
+	
 	
 }

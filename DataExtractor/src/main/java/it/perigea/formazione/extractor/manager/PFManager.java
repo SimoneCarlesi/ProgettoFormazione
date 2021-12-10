@@ -44,6 +44,7 @@ public class PFManager {
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(jsonString);
 		ZonedDateTime zonedDateTimeNow = ZonedDateTime.now(ZoneId.of("UTC"));
+		String dataString = (zonedDateTimeNow.getDayOfMonth()+"/"+zonedDateTimeNow.getMonthValue()+"/"+zonedDateTimeNow.getYear());
 		jsonNode.forEach(data1Row -> {
 			int extractedIstatCode = data1Row.get("codistat_comune_dom").asInt();
 			String extractedMunicipality = data1Row.get("comune_dom").asText();
@@ -51,18 +52,19 @@ public class PFManager {
 			int extractedTotDose1 = data1Row.get("tot_dose1").asInt();
 			int extractedTotDose2 = data1Row.get("tot_dose2").asInt();
 			SomministrationsDto sommDto = new SomministrationsDto();
-			sommDto.setCodistat_comune_dom(extractedIstatCode);
-			sommDto.setComune_dom(extractedMunicipality);
-			sommDto.setProvincia_dom(extractedProvince);
-			sommDto.setTot_dose1(extractedTotDose1);
-			sommDto.setTot_dose2(extractedTotDose2);
+			sommDto.setCodistatComuneDom(extractedIstatCode);
+			sommDto.setComuneDom(extractedMunicipality);
+			sommDto.setProvinciaDom(extractedProvince);
+			sommDto.setTotDose1(extractedTotDose1);
+			sommDto.setTotDose2(extractedTotDose2);
 			for (AbbreviationsDto s : province) {
-				if (sommDto.getProvincia_dom().equalsIgnoreCase(s.getNome())) {
+				if (sommDto.getProvinciaDom().equalsIgnoreCase(s.getNome())) {
 					sommDto.setSigla(s.getSigla());
 				} else {
 				}
 			}
 			sommDto.setData(zonedDateTimeNow);
+			sommDto.setDate(dataString);		
 			listSommDto.add(sommDto);
 		});
 		LOGGER.info("List return correctly");

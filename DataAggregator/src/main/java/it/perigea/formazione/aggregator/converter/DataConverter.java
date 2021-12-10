@@ -10,4 +10,5 @@ public class DataConverter implements Converter<ZonedDateTime, Date> {
     public Date convert(ZonedDateTime zonedDateTime) {
         return Date.from(zonedDateTime.toInstant());
     }
+    
 }

@@ -1,69 +1,62 @@
 package it.perigea.formazione.aggregator.entity;
 
-import java.time.ZonedDateTime;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 
-//@ TODO devo avere entity diverse.
 
 @Document("somministrations")
 public class SomministrationsEntity {
 	
 	@Id
+	@Field("_id")
+	private ObjectId id1;
+	
+	@Field("codice")
+	private int codistatComuneDom;
+	
+	@Field("dataDate")
 	private Date data;
-	private int codistat_comune_dom;
-    private String comune_dom;
-    private String provincia_dom;
+	
+	@Field("dataString")
+	private String date;
+	
+	@Field("comune")
+    private String comuneDom;
+		
+	@Field("provincia")
+    private String provinciaDom;
+	
+	@Field("sigla")
     private String sigla;
-    private int tot_dose1;
-    private int tot_dose2;
+	
+	@Field("dose1")
+    private int totDose1;
+	
+	@Field("dose2")
+    private int totDose2;
 
-
-	public int getCodistat_comune_dom() {
-		return codistat_comune_dom;
+    
+    
+	public ObjectId getId1() {
+		return id1;
 	}
 
-	public void setCodistat_comune_dom(int codistat_comune_dom) {
-		this.codistat_comune_dom = codistat_comune_dom;
+	public void setId1(ObjectId id1) {
+		this.id1 = id1;
 	}
 
-	public String getComune_dom() {
-		return comune_dom;
+	public String getDate() {
+		return date;
 	}
 
-	public void setComune_dom(String comune_dom) {
-		this.comune_dom = comune_dom;
-	}
-
-	public String getProvincia_dom() {
-		return provincia_dom;
-	}
-
-	public void setProvincia_dom(String provincia_dom) {
-		this.provincia_dom = provincia_dom;
-	}
-
-	public int getTot_dose1() {
-		return tot_dose1;
-	}
-
-	public void setTot_dose1(int tot_dose1) {
-		this.tot_dose1 = tot_dose1;
-	}
-
-	public int getTot_dose2() {
-		return tot_dose2;
-	}
-
-	public void setTot_dose2(int tot_dose2) {
-		this.tot_dose2 = tot_dose2;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public Date getData() {
@@ -74,6 +67,30 @@ public class SomministrationsEntity {
 		this.data = data;
 	}
 
+	public int getCodistatComuneDom() {
+		return codistatComuneDom;
+	}
+
+	public void setCodistatComuneDom(int codistatComuneDom) {
+		this.codistatComuneDom = codistatComuneDom;
+	}
+
+	public String getComuneDom() {
+		return comuneDom;
+	}
+
+	public void setComuneDom(String comuneDom) {
+		this.comuneDom = comuneDom;
+	}
+
+	public String getProvinciaDom() {
+		return provinciaDom;
+	}
+
+	public void setProvinciaDom(String provinciaDom) {
+		this.provinciaDom = provinciaDom;
+	}
+
 	public String getSigla() {
 		return sigla;
 	}
@@ -81,5 +98,23 @@ public class SomministrationsEntity {
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
-       
+
+	public int getTotDose1() {
+		return totDose1;
+	}
+
+	public void setTotDose1(int totDose1) {
+		this.totDose1 = totDose1;
+	}
+
+	public int getTotDose2() {
+		return totDose2;
+	}
+
+	public void setTotDose2(int totDose2) {
+		this.totDose2 = totDose2;
+	}
+
+
+	
 }
