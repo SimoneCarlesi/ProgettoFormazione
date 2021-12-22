@@ -21,6 +21,19 @@ public class ExecutionEntity {
 	
 	@Column(name="esito")
 	private String result;
+	
+	@Column(name="tipo")
+	private String type;
+
+	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public int getId() {
 		return id;

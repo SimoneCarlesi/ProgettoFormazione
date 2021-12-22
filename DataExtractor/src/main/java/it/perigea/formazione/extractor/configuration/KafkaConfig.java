@@ -20,6 +20,10 @@ public class KafkaConfig {
     
     @Value("${topicName}")
 	private String topicName;
+    
+
+	@Value("${ClinicalTopicName}")
+	private String ClinicalTopicName;
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -37,8 +41,12 @@ public class KafkaConfig {
                 .build();
     }
     
-//    @Bean
-//    public NewTopic topic1() {
-//         return new NewTopic(topicName, 1, (short) 1);
-//    }
+	@Bean
+	public NewTopic mySecondTopic() {
+		return TopicBuilder.name(ClinicalTopicName)
+				.partitions(1)
+				.replicas(1)
+				.config(TopicConfig.RETENTION_MS_CONFIG, "43200000")
+				.build();
+	}
 }

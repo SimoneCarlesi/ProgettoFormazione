@@ -12,5 +12,10 @@ import it.perigea.formazione.extractor.entity.ProcessEntity;
 public interface ProcessRepository extends JpaRepository<ProcessEntity,Long> { 
 	
 	public List<ProcessEntity> findByDateTime(Date date);
+	
+	public List<ProcessEntity> findByType(String type);
+
+	public List<ProcessEntity> findAllByDateTimeLessThanEqualAndDateTimeGreaterThanEqual(Date endDate,
+			Date startDate);
 
 }

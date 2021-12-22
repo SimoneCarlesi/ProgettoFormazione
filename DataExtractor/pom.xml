@@ -8,8 +8,8 @@
 		<version>2.5.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>MySpringProject</artifactId>
+	<groupId>it.perigea.formazione</groupId>
+	<artifactId>it.perigea.formazione.extractor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MySpringProject</name>
 	<description>Demo project for Spring Boot</description>

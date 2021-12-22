@@ -32,13 +32,12 @@ public class Application {
 		String topicName="somministrazioni-anticovid19-lombardia";
 		ZonedDateTime zonedDateTimeNow = ZonedDateTime.now(ZoneId.of("UTC"));
 		String dataString = (zonedDateTimeNow.getDayOfMonth() + "/" + zonedDateTimeNow.getMonthValue() + "/"
-				+ zonedDateTimeNow.getYear());
-		try {
-			//@ TODO provare a vedere come staccare il thread per renderlo indipendente. concorrente/parallelo
-			mongo.dataController(dataString);
-			consumer.consumeMessages(topicName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+				+ zonedDateTimeNow.getYear());	
+//		HandleThread ht1=new HandleThread();
+//		HandleThread ht2=new HandleThread();
+//		Thread t1=new Thread(ht1);
+//		Thread t2=new Thread(ht2);
+//		t1.start();
+//		t2.start();
 	}
 }

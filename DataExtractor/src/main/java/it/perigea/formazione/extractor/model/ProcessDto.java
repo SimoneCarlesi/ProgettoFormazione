@@ -8,7 +8,16 @@ public class ProcessDto {
 	private int uuid;
 	private Date dateTime;
 	private String status;
+	private String type;
+
 	
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public int getUuid() {
 		return uuid;
 	}

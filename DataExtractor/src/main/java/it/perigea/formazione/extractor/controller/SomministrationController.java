@@ -21,6 +21,7 @@ import it.perigea.formazione.extractor.model.AbbreviationsDto;
 import it.perigea.formazione.extractor.model.ExecutionDto;
 import it.perigea.formazione.extractor.model.ProcessDto;
 import it.perigea.formazione.extractor.service.ServiceInterface;
+import it.perigea.formazione.extractor.service.SomministrationImpl;
 
 @RestController
 @RequestMapping("/Vaccini")
@@ -37,7 +38,7 @@ public class SomministrationController {
 	private String topicName;
 
 	@Autowired
-	private ServiceInterface sommService;
+	private SomministrationImpl sommService;
 	
 	@Autowired
 	private KafkaService kafkaService;
@@ -46,7 +47,7 @@ public class SomministrationController {
 	@GetMapping("/dataClient")
 	public ResponseEntity<String> dataClient() {
 		try {
-			String resultRequest = sommService.dataClient();
+			String resultRequest = sommService.dataDownload();
 			return ResponseEntity.ok().body("The process ended succesfully");
 		} catch (Exception exc) {
 			return ResponseEntity.ok().body("Status failure.");

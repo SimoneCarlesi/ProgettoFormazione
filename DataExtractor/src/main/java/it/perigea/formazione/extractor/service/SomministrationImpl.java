@@ -22,7 +22,7 @@ import it.perigea.formazione.extractor.controller.SomministrationController;
 import it.perigea.formazione.extractor.entity.AbbreviationsEntity;
 import it.perigea.formazione.extractor.entity.ExecutionEntity;
 import it.perigea.formazione.extractor.entity.ProcessEntity;
-import it.perigea.formazione.extractor.manager.PFManager;
+import it.perigea.formazione.extractor.manager.SomministrationsManager;
 import it.perigea.formazione.extractor.model.AbbreviationsDto;
 import it.perigea.formazione.extractor.model.ExecutionDto;
 import it.perigea.formazione.extractor.model.ProcessDto;
@@ -50,11 +50,11 @@ public class SomministrationImpl implements ServiceInterface {
 	@Autowired
 	public AbbreviationsRepository abbRepository;
 
-	public PFManager manager = new PFManager();
+	public SomministrationsManager manager = new SomministrationsManager();
 	
 	//scarica i dati sulle somministrazioni Lombardia
 	@Override
-	public String dataClient() throws Exception {
+	public String dataDownload() throws Exception {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client.target(lombardiaJson);
 		Response response = target.request(MediaType.APPLICATION_JSON).get();
@@ -65,7 +65,6 @@ public class SomministrationImpl implements ServiceInterface {
 	
 	//controlla se il Json delle province è gia stato scaricato e se è gia presente
 	//nel database locale
-	@Override
 	public List<AbbreviationsDto> checkProvince() throws Exception {
 		List<AbbreviationsEntity> list = abbRepository.findAll();
 		if (!(list.isEmpty())) {
@@ -77,10 +76,18 @@ public class SomministrationImpl implements ServiceInterface {
 	}
 	
 	//metodo per ottenere il dato Json manipolato
-	@Override
+		@Override
+		public List<SomministrationsDto> modifiedData() throws Exception {
+			LOGGER.trace("Entering method checkSomministration");
+			String jsonString = dataDownload();
+			List<AbbreviationsDto> province = checkProvince();
+			return manager.getModifiedDataList(jsonString, province);
+		}
+	
+	//metodo per ottenere il dato Json manipolato
 	public List<SomministrationsDto> checkSomministration() throws Exception {
 		LOGGER.trace("Entering method checkSomministration");
-		String jsonString = dataClient();
+		String jsonString = dataDownload();
 		List<AbbreviationsDto> province = checkProvince();
 		return manager.getModifiedDataList(jsonString, province);
 	}
@@ -93,7 +100,6 @@ public class SomministrationImpl implements ServiceInterface {
 	}
 	
 	//scarica i dati Json sulle province 
-	@Override
 	public List<AbbreviationsDto> provinceClient() throws Exception {
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client.target(province);
@@ -106,14 +112,13 @@ public class SomministrationImpl implements ServiceInterface {
 	}
 	
 	//Mostra tutte le esecuzioni presenti su DB locale
-	@Override
+
 	public List<ExecutionDto> getAllEsecutions() {
 		List<ExecutionEntity> listEsecutionEntity = esecutionRepository.findAll();
 		return manager.getExecutionDtoListFromDB(listEsecutionEntity);
 	}
 	
 	//Mostra tutti i processi sulla base di una data passata per parametro
-	@Override
 	public List<ProcessDto> getProcessByDate(String data) throws ParseException {
 		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(data);
 		List<ProcessEntity> list = processRepository.findByDateTime(date);
@@ -121,7 +126,6 @@ public class SomministrationImpl implements ServiceInterface {
 	}
 	
 	//mostra tutti i processi presenti su DB locale
-	@Override
 	public List<ProcessDto> getAllProcess() {
 		List<ProcessEntity> listProcessEntity = processRepository.findAll();
 		return manager.getProcessDtoListFromDB(listProcessEntity);

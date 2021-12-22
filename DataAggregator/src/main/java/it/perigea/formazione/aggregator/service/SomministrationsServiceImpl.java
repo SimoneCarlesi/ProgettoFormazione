@@ -6,23 +6,41 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import it.perigea.formazione.aggregator.entity.SomministrationsEntity;
+import it.perigea.formazione.aggregator.kafka.KafkaService;
+import it.perigea.formazione.aggregator.mongodb.MongoDB;
 import it.perigea.formazione.aggregator.repository.SomministrationsRepository;
 import it.perigea.formazione.comune.SomministrationsDto;
 
 
 
 @Service
-public class SomministrationsServiceImpl implements SomministrationsService {
+public class SomministrationsServiceImpl implements SomministrationsService{
 	
 	@Autowired
 	private SomministrationsRepository sommRepository;
 	
 	@Autowired 
 	private SomministrationsService sommService;
+	
+	
+	@Autowired
+	private MongoDB mongo;
+	
+	@Value("${topicName}")
+	private String topicName;
+	
+	@Autowired
+	private KafkaService kafkaService;
+	
+	
 	
 	//@ TODO "aggregation" per fare filtri, sommatorie. Controllare
 	
@@ -135,6 +153,7 @@ public class SomministrationsServiceImpl implements SomministrationsService {
 		List<SomministrationsEntity> list = sommRepository.findByprovinciaDom(province.toUpperCase());
 		list.sort(Comparator.comparing(SomministrationsEntity::getTotDose2).reversed());
 		return list.get(0);
-	}	
+	}
+	
 	
 }

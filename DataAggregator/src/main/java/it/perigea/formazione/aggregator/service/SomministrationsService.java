@@ -33,7 +33,4 @@ public interface SomministrationsService  {
 	
 	public SomministrationsEntity findComuneWithMoreVaccinatedDoubleDoseWithProvince(String province);
 	
-	
-	
-
 }

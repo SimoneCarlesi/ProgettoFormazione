@@ -46,21 +46,19 @@ public class KafkaConsumerConfig{
 	private KafkaConsumer<String, SomministrationsDto> consumer;
 	
 	
-	
-//	@Bean
-//	public Properties consumerConfigs() {
-////      Map<String, Object> props = new HashMap<>(
-////              kafkaProperties.buildConsumerProperties()
-////      );
-//		Properties props = new Properties();
-//		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-//		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-//		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-//		props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-//		props.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
-//		props.put(JsonDeserializer.TRUSTED_PACKAGES, "it.perigea.formazione.*");
-	
-//
-//		return props;
-//	}
+	@Bean
+	public Properties consumerConfigs() {
+		Properties props = new Properties();
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+		props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+		return props;
+	}
+
+	@Bean
+	public KafkaConsumer<String, SomministrationsDto> kafkaConsumer() {
+		return new KafkaConsumer<>(consumerConfigs());
+	}
 }

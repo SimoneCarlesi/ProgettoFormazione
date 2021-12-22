@@ -25,7 +25,7 @@ import it.perigea.formazione.extractor.repository.AbbreviationsRepository;
 import it.perigea.formazione.extractor.repository.ExecutionRepository;
 import it.perigea.formazione.extractor.repository.ProcessRepository;
 
-public class PFManager {
+public class SomministrationsManager {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SomministrationController.class);
 
