@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.perigea.formazione.comune.AbbreviationsDto;
+import it.perigea.formazione.comune.ExecutionDto;
+import it.perigea.formazione.comune.ProcessDto;
 import it.perigea.formazione.comune.SomministrationsDto;
 import it.perigea.formazione.extractor.kafka.KafkaService;
-import it.perigea.formazione.extractor.model.AbbreviationsDto;
-import it.perigea.formazione.extractor.model.ExecutionDto;
-import it.perigea.formazione.extractor.model.ProcessDto;
 import it.perigea.formazione.extractor.service.ServiceInterface;
 import it.perigea.formazione.extractor.service.SomministrationImpl;
 

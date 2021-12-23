@@ -1,4 +1,4 @@
-package it.perigea.formazione.extractor.model;
+package it.perigea.formazione.comune;
 
 import java.util.Date;
 

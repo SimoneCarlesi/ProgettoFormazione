@@ -1,4 +1,4 @@
-package it.perigea.formazione.extractor.model;
+package it.perigea.formazione.comune;
 
 
 public class ExecutionDto {

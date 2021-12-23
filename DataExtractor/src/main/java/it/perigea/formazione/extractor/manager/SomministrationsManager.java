@@ -13,14 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import it.perigea.formazione.comune.AbbreviationsDto;
+import it.perigea.formazione.comune.ExecutionDto;
+import it.perigea.formazione.comune.ProcessDto;
 import it.perigea.formazione.comune.SomministrationsDto;
 import it.perigea.formazione.extractor.controller.SomministrationController;
 import it.perigea.formazione.extractor.entity.AbbreviationsEntity;
 import it.perigea.formazione.extractor.entity.ExecutionEntity;
 import it.perigea.formazione.extractor.entity.ProcessEntity;
-import it.perigea.formazione.extractor.model.AbbreviationsDto;
-import it.perigea.formazione.extractor.model.ExecutionDto;
-import it.perigea.formazione.extractor.model.ProcessDto;
 import it.perigea.formazione.extractor.repository.AbbreviationsRepository;
 import it.perigea.formazione.extractor.repository.ExecutionRepository;
 import it.perigea.formazione.extractor.repository.ProcessRepository;
