@@ -22,7 +22,7 @@ public class ManagerImpl implements Manager {
 		controlledRunnable.stop();
 		this.thread.interrupt();
 	}
-
+	
 	// Metodo per avviare il thread
 	@Override
 	public void startThread(ExecutorService cached) throws InterruptedException {

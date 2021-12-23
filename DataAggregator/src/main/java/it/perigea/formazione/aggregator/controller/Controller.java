@@ -39,12 +39,6 @@ public class Controller {
 	@Autowired
 	private MongoDB mongo;
 	
-	@PostMapping(value = "/consumer")
-	@ResponseBody
-	public void fromTopicToJava() throws Exception {
-		kafkaService.consumeMessages(topicName);
-	}
-	
 	
 	@GetMapping(value="/deleteMessages")
 	public ResponseEntity<String> deleteDuplicate(@RequestParam String date){

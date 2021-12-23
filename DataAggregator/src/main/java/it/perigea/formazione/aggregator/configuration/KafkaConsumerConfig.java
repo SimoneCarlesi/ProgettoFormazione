@@ -16,6 +16,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
+import it.perigea.formazione.comune.ClinicalStatusDto;
 import it.perigea.formazione.comune.SomministrationsDto;
 
 
@@ -41,9 +42,6 @@ public class KafkaConsumerConfig{
 	@Value("${spring.kafka.consumer.group-id}")
 	private String groupId;
 	
-	private final org.apache.logging.log4j.Logger logger = LogManager.getLogger(KafkaConsumerConfig.class);
-	
-	private KafkaConsumer<String, SomministrationsDto> consumer;
 	
 	
 	@Bean
@@ -56,9 +54,16 @@ public class KafkaConsumerConfig{
 		props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
 		return props;
 	}
+	
+
 
 	@Bean
 	public KafkaConsumer<String, SomministrationsDto> kafkaConsumer() {
+		return new KafkaConsumer<>(consumerConfigs());
+	}
+	
+	@Bean
+	public KafkaConsumer<String, ClinicalStatusDto> kafkaConsumerClinical() {
 		return new KafkaConsumer<>(consumerConfigs());
 	}
 }

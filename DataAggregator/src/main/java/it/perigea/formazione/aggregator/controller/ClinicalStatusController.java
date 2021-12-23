@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import it.perigea.formazione.aggregator.entity.ClinicalStatusEntity;
 import it.perigea.formazione.aggregator.kafka.KafkaService;
+import it.perigea.formazione.aggregator.kafka.KafkaServiceClinical;
 import it.perigea.formazione.aggregator.mongodb.MongoDB;
 //import it.perigea.formazione.aggregator.repository.ClinicalStatusRepository;
 import it.perigea.formazione.aggregator.service.ClinicalStatusImpl;
+import it.perigea.formazione.aggregator.thread.HandleThreadMap;
+import it.perigea.formazione.aggregator.thread.ManagerImpl;
 
 @RestController
 @RequestMapping("/StatiClinici")
@@ -27,7 +30,7 @@ public class ClinicalStatusController {
 	private String ClinicalTopicName;
 
 	@Autowired
-	private KafkaService kafkaService;
+	private KafkaServiceClinical kafkaServiceClinical;
 
 	@Autowired
 	private ClinicalStatusImpl clinicalService;
@@ -35,16 +38,14 @@ public class ClinicalStatusController {
 	@Autowired
 	private MongoDB mongo;
 
+	@Autowired
+	private HandleThreadMap handleThreadMap;
 
 	//	chiamata REST per il consumer relativo agli stati clinici
-	@PostMapping(value = "/clinicalConsumer")
-	@ResponseBody
-	public void fromTopicToJava() throws Exception {
-		ZonedDateTime zonedDateTimeNow = ZonedDateTime.now(ZoneId.of("UTC"));
-		String dataString = (zonedDateTimeNow.getDayOfMonth() + "/" + zonedDateTimeNow.getMonthValue() + "/"
-				+ zonedDateTimeNow.getYear());
-		mongo.deleteClinicalData(dataString);
-		kafkaService.consumeClinicalMessages(ClinicalTopicName);
+	@GetMapping(value = "/clinicalConsumer")
+	public void fromTopicToJava(@RequestParam String key) throws InterruptedException {
+		ManagerImpl manager=new ManagerImpl(kafkaServiceClinical);
+		handleThreadMap.addManagersToMap(key,manager);
 	}
 
 	//	chiamata REST per eliminare i duplicati
